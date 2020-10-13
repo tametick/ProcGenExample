@@ -19,6 +19,23 @@ public class GeneratorHelper : MonoBehaviour
 		}
 	}
 
+	public void Clear() {
+		while (mapContainer.childCount > 0) {
+			var tile = mapContainer.GetChild(0);
+			tile.parent = null;
+			DestroyImmediate(tile.gameObject);
+		}
+		while (transform.childCount > 0) {
+			var tilePrototype = transform.GetChild(0);
+			tilePrototype.parent = null;
+			DestroyImmediate(tilePrototype.gameObject);
+		}
+	}
+
+	public GameObject GetTile(int x, int y) {
+		return map[x, y];
+	}
+
 	private void AddTile(int x, int y, string tileType) {
 		var tile = map[x, y] = Instantiate(tilePrefabs[tileType], mapContainer);
 		tile.SetActive(true);

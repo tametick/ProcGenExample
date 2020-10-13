@@ -1,23 +1,21 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(SimpleRandomGenerator))]
-public class GeneratorEditor : Editor
-{
+[CustomEditor(typeof(GeneratorHelper))]
+public class GeneratorEditor : Editor {
 	public override void OnInspectorGUI() {
 		DrawDefaultInspector();
 
-		var gen = (SimpleRandomGenerator)target;
+		var helper = (GeneratorHelper)target;
 
 		if (GUILayout.Button("Clear")) {
-			gen.Clear();
+			helper.Clear();
 		}
 
-		if (GUILayout.Button("Generate")) {
-			gen.Generate();
+		foreach (var gen in helper.GetComponents<BaseGenerator>()) {
+			if (GUILayout.Button($"{gen}")) {
+				gen.Generate();
+			}
 		}
-
 	}
 }
